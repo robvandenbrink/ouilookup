@@ -6,8 +6,12 @@ The Linux version downloads the text file to $HOME/Downloads, the script can res
 
 Edit the script you are using if these directories are not desirable in your situation
 
-More details at 
+More details at:
+
 https://isc.sans.edu/diary/Mining+MAC+Address+and+OUI+Information/25360
+
+and
+
 https://isc.sans.edu/forums/diary/Mining+Live+Networks+for+OUI+Data+Oddness/25404/
 
 Enjoy!
