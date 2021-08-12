@@ -1,10 +1,14 @@
 @echo off
+
+set OUI_PATH=c:\utils
+set OUI_URL_DL=https://gitlab.com/wireshark/wireshark/raw/master/manuf
+
 :START
 REM ===========================
 REM before you start, make sure that the offline oui.txt data file is available.
-if EXIST c:\utils\oui.txt goto SYNTAX
+if EXIST %OUI_PATH%\oui.txt goto SYNTAX
 echo ****** Warning ******
-echo c:\utils\oui.txt does not exist, downloading source data
+echo %OUI_PATH%\oui.txt does not exist, downloading source data
 echo *********************
 goto UPDATE
 REM ===========================
@@ -28,11 +32,11 @@ REM =============================
 REM =============================
 REM remove all delimeters
 REM =============================
-echo %1 | tr -d ":\-.\r\n\ " | tr '[:lower:]' '[:upper:]' > %temp%\ouioui.tmp
+echo %1 | tr -d ":\-.\r\n\ " | tr '[:lower:]' '[:upper:]' | cut -c 1-6 > %temp%\ouioui.tmp
 REM =============================
 REM check for both OUI or Vendor matches
 REM =============================
-type c:\utils\oui.txt | grep -i -f %temp%\ouioui.tmp
+type %OUI_PATH%\oui.txt | grep -i -f %temp%\ouioui.tmp
 goto ENDEND
 :HELP
 echo OUI Utility
@@ -51,7 +55,7 @@ echo                        If there is no oui.txt, the update happens and any l
 echo                        This update comes from Wireshark's consolidated vendor list
 echo                        This list is compiled from a number of sources, and is considered a superset of the IEEE list
 echo                        This is downloaded from:
-echo                              https://code.wireshark.org/review/gitweb?p=wireshark.git;a=blob_plain;f=manuf;hb=HEAD
+echo                              https://gitlab.com/wireshark/wireshark/raw/master/manuf
 echo                        The IEEE listing can be obtained from: 
 echo                              http://standards-oui.ieee.org/oui/oui.csv
 echo                              http://standards-oui.ieee.org/cid/cid.csv
@@ -63,9 +67,10 @@ goto ENDEND
 REM =============================
 REM collect the updated file, then remove the colon delimeters
 REM =============================
-md c:\utils
-echo OUI:Vendor:VendorString| tr : \t > c:\utils\oui.txt
-curl --insecure https://code.wireshark.org/review/gitweb?p=wireshark.git;a=blob_plain;f=manuf;hb=HEAD | tr -d : | grep -v "^#" | grep -v "^$" >> c:\utils\oui.txt
+rem
+md %OUI_PATH%
+echo OUI:Vendor:VendorString| tr : \t > %OUI_PATH%\oui.txt
+curl --insecure %OUI_URL_DL% | tr -d : | grep -v "^#" | grep -v "^$" >> %OUI_PATH%\oui.txt
 goto ENDEND
 :ENDEND
 REM ==============================
