@@ -65,7 +65,7 @@ REM collect the updated file, then remove the colon delimeters
 REM =============================
 md c:\utils
 echo OUI:Vendor:VendorString| tr : \t > c:\utils\oui.txt
-curl --insecure https://code.wireshark.org/review/gitweb?p=wireshark.git;a=blob_plain;f=manuf;hb=HEAD | tr -d : | grep -v "^#" | grep -v "^$" >> c:\utils\oui.txt
+curl --insecure https://www.wireshark.org/download/automated/data/manuf | tr -d : | grep -v "^#" | grep -v "^$" >> c:\utils\oui.txt
 goto ENDEND
 :ENDEND
 REM ==============================
