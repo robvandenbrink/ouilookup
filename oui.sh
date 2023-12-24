@@ -1,7 +1,7 @@
 
 function updateouis
 {
-	curl --insecure "https://code.wireshark.org/review/gitweb?p=wireshark.git;a=blob_plain;f=manuf;hb=HEAD" | tr -d : > $HOME/Downloads/oui.txt
+	curl --insecure "https://www.wireshark.org/download/automated/data/manuf" | tr -d : > $HOME/Downloads/oui.txt
 }
 # first make sure that the data file is there
 if ! [ -f $HOME/Downloads/oui.txt ] 
